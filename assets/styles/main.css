@@ -1,0 +1,247 @@
+/* 全域設定 */
+body {
+  font-family: 'Segoe UI', 'Noto Sans TC', sans-serif;
+  background-color: #f4f5f4; /* 全站背景 */
+  color: #374151;
+  line-height: 1.6;
+}
+
+/* ✅ 頁面容器：左右留白 5% */
+.page-container {
+  width: 90%;
+  margin: 0 auto;
+  background-color: transparent;
+}
+
+/* Header */
+header {
+  background: #ffffff;
+  border-bottom: 1px solid #e5e7eb;
+  padding: 1rem 0;
+}
+
+/* 標題文字 */
+header h1 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #475855; /* 主色 */
+}
+
+/* 搜尋框 */
+header input {
+  padding: 0.5rem 1rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.5rem;
+  transition: all 0.2s ease;
+}
+header input:focus {
+  border-color: #b9a2a6; /* 點綴色 */
+  box-shadow: 0 0 0 3px rgba(185, 162, 166, 0.3);
+}
+
+/* 搜尋按鈕（如果有） */
+.btn-search {
+  background-color: #475855;
+  color: #fff;
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.375rem;
+  transition: transform 0.2s ease;
+}
+.btn-search:hover {
+  background-color: #b9a2a6;
+  transform: translateY(-2px);
+}
+
+/* ✅ 統一購物車徽章樣式 */
+.badge-count {
+  background-color: #b9a2a6;
+  color: #fff;
+  font-size: 0.75rem;
+  border-radius: 9999px;
+  padding: 0.125rem 0.5rem;
+  position: absolute;
+  top: -0.5rem;
+  right: -0.5rem;
+}
+
+/* ✅ 商品卡片 */
+.product-card {
+  width: 100%;
+  aspect-ratio: 1 / 1.1;
+  border-radius: 1rem;
+  background: #fff;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  display: flex;
+  flex-direction: column;
+}
+.product-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+}
+
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
+  padding: 1.5rem 0;
+}
+
+
+
+/* 商品圖片佔位 */
+.image-placeholder {
+  flex: 1;
+  background: #ffffff;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+/* 商品資訊區 */
+.card-body {
+  padding: 0.75rem;
+  text-align: center;
+}
+.product-card h3 {
+  font-size: 1.125rem;
+  font-weight: 700;
+  margin-bottom: 0.25rem;
+}
+.product-card .price {
+  font-size: 1rem;
+  color: #475855; /* 主色 */
+  font-weight: 600;
+}
+
+/* 按鈕樣式 */
+.btn {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  transition: all 0.25s ease;
+}
+.btn-primary {
+  background-color: #475855; /* 主色 */
+  color: #fff;
+}
+.btn-primary:hover {
+  background-color: #b9a2a6; /* 點綴色 */
+  color: #fff;
+  transform: translateY(-2px);
+}
+
+/* 購物車抽屜 */
+.cart-drawer {
+  background: #fff;
+  border-left: 1px solid #e5e7eb;
+  box-shadow: -2px 0 8px rgba(0,0,0,0.1);
+}
+.cart-drawer h2 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #475855; /* 主色 */
+}
+.cart-drawer button {
+  transition: background 0.2s ease;
+}
+.cart-drawer button:hover {
+  background: #b9a2a6; /* 點綴色 */
+}
+
+/* 分類選單容器 */
+.category-selector {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  padding: 1rem 5%;
+  border-bottom: 1px solid #e5e7eb;
+  background-color: #ffffff;
+  justify-content: flex-start; /* ✅ 可改為 center 或 space-between 根據需求 */
+  box-sizing: border-box;      /* ✅ 確保 padding 不影響寬度 */
+}
+
+/* 分類按鈕 */
+.category-button {
+  padding: 0.5rem 1rem;
+  min-width: 100px;
+  font-size: 1rem;
+  text-align: center;
+  border: 1px solid #e5e7eb;
+  border-width: 1px; /* ✅ 明確設定 */
+  border-radius: 0.5rem;
+  background-color: #f9fafb;
+  color: #475855;
+  font-weight: 600;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  box-sizing: border-box;
+  white-space: nowrap;
+}
+
+.category-button:hover {
+  background-color: #b9a2a6;
+  color: #fff;
+  transform: translateY(-2px);
+}
+
+.category-button.active {
+  background-color: #475855;
+  color: #fff;
+  border-color: #475855;
+  border-width: 1px;
+  font-weight: 600;
+  box-sizing: border-box;
+  transform: translateY(-2px); /* ✅ 保持一致 */
+}
+
+/* 購物車徽章：只補這個，不會影響其他配色 */
+.badge-count {
+  position: absolute;
+  top: -0.4rem;
+  right: -0.4rem;
+  background-color: #dc2626;
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 700;
+  border-radius: 9999px;
+  padding: 0.15rem 0.4rem;
+  line-height: 1;
+}
+
+/* 分類按鈕（維持你的主色） */
+.category-button { /* 若你已經有就略過 */
+  padding: 0.5rem 1rem;
+  border: 1px solid #d1d5db;
+  border-radius: 0.5rem;
+  background-color: #f9fafb;
+  color: #374151;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+.category-button:hover {
+  background-color: #b9a2a6; /* 你的點綴色 */
+  color: #fff;
+  transform: translateY(-2px);
+}
+.category-button.active {
+  background-color: #475855;  /* 你的主色 */
+  color: #fff;
+  border-color: #475855;
+  border-width: 1px;
+  font-weight: 600;
+  transform: translateY(-2px);
+}
+
+/* 共用主要按鈕（之後會在兩個元件用到） */
+.btn-primary {
+  background-color: #475855; /* 主色 */
+  color: #fff;
+}
+.btn-primary:hover {
+  background-color: #37413f; /* 主色加深 */
+}
+.price {
+  color: #475855;   /* 主色 */
+  font-weight: 600;
+}
+
