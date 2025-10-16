@@ -1,11 +1,12 @@
 <template>
   <div class="min-h-screen bg-gray-50 text-stone-800">
     <!-- Header -->
-    <Header
+    <Header    
       v-model="searchQuery"
       :cart-count="cart.length"
       @toggle-cart="showCart = !showCart"
     />
+
 
     <div class="page-container py-8">
       <div v-if="pending" class="text-center text-gray-500">載入中...</div>
@@ -81,6 +82,7 @@
       @decrease="decreaseQuantity"
       @checkout="checkout"
       @close="showCart = false"
+      @clear="clearCart"
     />
   </div>
 </template>
@@ -155,14 +157,17 @@ const total = computed(() =>
 
 async function checkout() {
   try {
+    console.log('[CartDrawer] 結帳中，購物車內容：', cart.value)
     const res = await $fetch('/api/checkout', { method: 'POST', body: cart.value })
+    console.log('[CartDrawer] 結帳結果：', res)
     useNuxtApp().$toast?.success?.(res.message || '結帳成功！')
     clearCart()
   } catch (err) {
-    console.error(err)
+    console.error('[CartDrawer] 結帳失敗：', err)
     useNuxtApp().$toast?.error?.('結帳失敗，請稍後再試')
   }
 }
+
 
 function formatPrice(value) {
   return new Intl.NumberFormat('zh-TW', {
