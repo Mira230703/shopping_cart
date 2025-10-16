@@ -49,6 +49,13 @@
       <div class="absolute bottom-0 left-0 w-64 h-64 bg-white/10 rounded-full blur-2xl"></div>
     </section>
 
+    <!-- 🔹（新增）分類選擇列：顯示在 Top10 之前 -->
+    <section class="page-container my-6">
+      <CategorySelect
+        :selected-category="selectedCategory"
+        @update:selectedCategory="onPickCategory"
+      />
+    </section>
 
     <!-- 🔥 Top 10 熱門商品 -->
     <section class="page-container my-8">
@@ -109,6 +116,7 @@
       @decrease="decreaseQuantity"
       @checkout="checkout"
       @close="showCart = false"
+      @clear="clearCart"
     />
   </div>
 </template>
@@ -120,6 +128,7 @@ import { useCart } from '~/composables/useCart'
 import Header from '~/components/Header.vue'
 import ProductCard from '~/components/ProductCard.vue'
 import CartDrawer from '~/components/CartDrawer.vue'
+import CategorySelect from '~/components/CategorySelector.vue' // ←（新增）匯入
 
 // router
 const router = useRouter()
@@ -137,7 +146,7 @@ const showCart = ref(false)
 const searchQuery = ref('')
 const selectedCategory = ref('全部')
 
-// 商品分類 (從 API 抓)
+// （保留原本）商品分類 (從 API 抓)
 const categories = ref(['全部'])
 async function loadCategories() {
   try {
@@ -243,6 +252,24 @@ watch(selectedCategory, () => {
   resetAndSearch()
 })
 
+// （新增）由 CategorySelect 點選類別時呼叫
+function onPickCategory(cat) {
+  // 若點到相同分類就不重複清空
+  if (selectedCategory.value === cat) return
+
+  selectedCategory.value = cat
+  allProducts.value = []
+  topProducts.value = []
+  page.value = 1
+  done.value = false
+  pending.value = false
+
+  // 立即重新載入
+  loadTop10()
+  loadProducts()
+}
+
+
 onMounted(() => {
   loadTop10()
   loadProducts()
@@ -269,11 +296,13 @@ function formatPrice(value) {
 // 結帳
 async function checkout() {
   try {
+    console.log('[CartDrawer] 結帳中，購物車內容：', cart.value)
     const res = await $fetch('/api/checkout', { method: 'POST', body: cart.value })
+    console.log('[CartDrawer] 結帳結果：', res)
     useNuxtApp().$toast?.success?.(res.message || '結帳成功！')
     clearCart()
   } catch (err) {
-    console.error(err)
+    console.error('[CartDrawer] 結帳失敗：', err)
     useNuxtApp().$toast?.error?.('結帳失敗，請稍後再試')
   }
 }
@@ -286,5 +315,12 @@ async function checkout() {
 }
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
+}
+
+/* 保留你原本的樣式；以下只是補上 product-grid，若你已有則可忽略 */
+.product-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
 }
 </style>
